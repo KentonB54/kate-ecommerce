@@ -6,9 +6,9 @@
 "scripts": {
   "test": "echo \"Error: no test specified\" && exit 1",
   "start": "node index.js",
-  "dev": "nodemon index.js",
-  "seed": "node ./db/seed.js",
-  "seed:dev": "nodemon ./db/seed.js"
+  "dev": "nodemon ./src/server.js",
+  "seed": "node ./src/seed/runSeed.js",
+  "seed:dev": "nodemon ./src/seed/runSeed.js"
 },
 "dependencies": {
   "cors": "^2.8.5",
