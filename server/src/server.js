@@ -10,9 +10,11 @@ app.use(cors())
 
 app.get("/", async (req, res) => {
     res.status(200).json({
-        message: "welcome to your express server sir"
+        message: "welcome to your express server sir",
+        kate: "is cool"
     })
 })
+
 const { client } = require("./config/database");
 
 client.connect();
