@@ -3,7 +3,7 @@ const { client } = require('../config/database')
 async function dropTables() {
     try {
       console.log('Starting to drop tables...');
-  
+     
       await client.query(`
         DROP TABLE IF EXISTS sales_analytics;
         DROP TABLE IF EXISTS payment;
@@ -31,7 +31,7 @@ async function createTables() {
       await client.query(`
         CREATE TABLE IF NOT EXISTS users (
           id serial PRIMARY KEY,
-          Firebase_UID varchar,
+          fireBase_UID varchar,
           username varchar,
           is_admin boolean,
           created_at timestamp

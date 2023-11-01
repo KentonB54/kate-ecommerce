@@ -1,6 +1,6 @@
 const { client } = require('../config/database');
 
-async function createReview(productId, userId, rating, comment) {
+async function createReview({product_id, user_id, rating, comment}) {
   try {
     const { rows: [newReview] } = await client.query(
       `
@@ -8,8 +8,7 @@ async function createReview(productId, userId, rating, comment) {
       VALUES ($1, $2, $3, $4)
       RETURNING *;
       `,
-      [productId, userId, rating, comment]
-    );
+      [product_id, user_id, rating, comment]);
     return newReview;
   } catch (error) {
     console.error('Error creating review', error);
@@ -17,7 +16,7 @@ async function createReview(productId, userId, rating, comment) {
   }
 }
 
-async function updateReview(reviewId, rating, comment) {
+async function updateReview({review_id, rating, comment}) {
   try {
     const { rows: [updatedReview] } = await client.query(
       `
@@ -26,7 +25,7 @@ async function updateReview(reviewId, rating, comment) {
       WHERE id = $1
       RETURNING *;
       `,
-      [reviewId, rating, comment]
+      [review_id, rating, comment]
     );
     return updatedReview;
   } catch (error) {
@@ -53,19 +52,43 @@ async function deleteReview(reviewId) {
 }
 
 async function getReviewsForProduct(productId) {
-  try {
-    const { rows: productReviews } = await client.query(
-      `
-      SELECT * FROM reviews
-      WHERE product_id = $1;
-      `,
-      [productId]
-    );
-    return productReviews;
-  } catch (error) {
-    console.error('Error getting reviews for product', error);
-    throw error;
+    try {
+      const { rows: productReviews } = await client.query(
+        `
+        SELECT reviews.id AS review_id, 
+               reviews.product_id, 
+               reviews.rating, 
+               reviews.comment, 
+               reviews.created_at AS review_created_at,
+               users.username
+        FROM reviews
+        INNER JOIN users ON reviews.user_id = users.id
+        WHERE product_id = $1;
+        `,
+        [productId]
+      );
+      return productReviews;
+    } catch (error) {
+      console.error('Error getting reviews for product', error);
+      throw error;
+    }
   }
+  
+
+async function getReviewsFromUserById(user_id) {
+    try {
+    const { rows: userReviews } = await client.query(`
+    SELECT *
+    FROM reviews
+    WHERE user_id = $1
+    `,
+    [user_id]
+    )
+
+    return userReviews
+    } catch (error) {
+    console.error("error with getting reviews from user", error)
+    }
 }
 
 module.exports = {
@@ -73,4 +96,5 @@ module.exports = {
   updateReview,
   deleteReview,
   getReviewsForProduct,
+  getReviewsFromUserById
 };

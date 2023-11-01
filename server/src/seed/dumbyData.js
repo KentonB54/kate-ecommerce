@@ -54,6 +54,18 @@ const usersData = [
       comment: 'Good product!',
     },
     {
+        product_id: 2, // Product 1
+        user_id: 1, // User 1
+        rating: 3,
+        comment: 'Good product!',
+    },
+    {
+        product_id: 1, // Product 1
+        user_id: 1, // User 1
+        rating: 5,
+        comment: 'Good product!',
+    },
+    {
       product_id: 2, // Product 2
       user_id: 2, // User 2
       rating: 5,
