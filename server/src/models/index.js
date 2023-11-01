@@ -7,4 +7,5 @@ module.exports = {
     ...require('./cartsModel'),
     ...require('./paymentModel'),
     ...require('./analyticsModel'),
+    ...require('./order_itemsModel')
   };

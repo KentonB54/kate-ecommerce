@@ -1,70 +1,78 @@
-const { client } = require('../config/database')
+const { client } = require("../config/database");
 
-async function createUser({fireBase_UID, username, is_admin}) {
-    try {
-      const { rows: [ user ] } = await client.query(`
+async function createUser({ fireBase_UID, username, is_admin }) {
+  try {
+    const {
+      rows: [user],
+    } = await client.query(
+      `
         INSERT INTO users(fireBase_UID, username, is_admin, created_at)
         VALUES ($1, $2, $3, NOW())
         RETURNING *;
         `,
-        [fireBase_UID, username, is_admin]
-      );
-      return user;
-    } catch (error) {
-      console.error('error with creating user', error)
-    }
+      [fireBase_UID, username, is_admin]
+    );
+    return user;
+  } catch (error) {
+    console.error("error with creating user", error);
+  }
 }
 
 async function getAllUsers() {
-    try {
-      const { rows: users } = await client.query(`
+  try {
+    const { rows: users } = await client.query(
+      `
       SELECT * 
       FROM users;
       `);
-      return users;
-    } catch (error) {
-        console.error('error with getting all users', error)
-    }
+    return users;
+  } catch (error) {
+    console.error("error with getting all users", error);
+  }
 }
 
 async function getUserById(userId) {
-    try {
-      const { rows: [user] } = await client.query(`
+  try {
+    const {
+      rows: [user],
+    } = await client.query(
+        `
         SELECT * 
         FROM users 
         WHERE id = $1;
         `,
-        [userId]
-      );
+      [userId]
+    );
 
-      return user; 
-    } catch (error) {
-        console.error('error with getting all users', error)
-    }
+    return user;
+  } catch (error) {
+    console.error("error with getting all users", error);
   }
+}
 
-
-  async function updateUser({userId, username, is_admin}) {
-    try {
-      const { rows: [ user ] } = await client.query(
+async function updateUser({ userId, username, is_admin }) {
+  try {
+    const {
+      rows: [user],
+    } = await client.query(
         `
         UPDATE users
         SET username = $2, is_admin = $3
         WHERE id = $1
         RETURNING *;
         `,
-        [userId, username, is_admin]
-      );
+      [userId, username, is_admin]
+    );
 
-      return user; 
-    } catch (error) {
-        console.error('error with updating user', error)
-    }
+    return user;
+  } catch (error) {
+    console.error("error with updating user", error);
   }
+}
 
-  module.exports = {
-    createUser,
-    getAllUsers,
-    getUserById,
-    updateUser
-  };
+module.exports = {
+  createUser,
+  getAllUsers,
+  getUserById,
+  updateUser,
+};

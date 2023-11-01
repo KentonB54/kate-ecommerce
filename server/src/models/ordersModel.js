@@ -29,7 +29,7 @@ async function getOrderById(orderId) {
   }
 }
 
-async function createOrder(userId, shippingAddress, shippingMethod, trackingNumber, deliveryStatus) {
+async function createOrder({userId, shippingAddress, shippingMethod, trackingNumber, deliveryStatus}) {
   try {
     const { rows: [order] } = await client.query(`
       INSERT INTO orders (user_id, shipping_address, shipping_method, tracking_number, delivery_status)

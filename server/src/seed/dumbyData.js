@@ -42,6 +42,22 @@ const usersData = [
       category_id: 2, // Category 2
       image_urls: ['image3.jpg'],
     },
+    {
+      name: 'Product 2',
+      description: 'Description for Product 2',
+      price: 20,
+      stock: 50,
+      category_id: 2, // Category 2
+      image_urls: ['image3.jpg'],
+    },
+    {
+      name: 'Product 2',
+      description: 'Description for Product 2',
+      price: 20,
+      stock: 50,
+      category_id: 2, // Category 2
+      image_urls: ['image3.jpg'],
+    },
     // Add more product data as needed
   ];
   
@@ -99,13 +115,13 @@ const ordersData = [
       order_id: 1, // Order 1
       product_id: 1, // Product 1
       quantity: 2,
-      total_price: 20,
+      total_price: 20.00,
     },
     {
       order_id: 2, // Order 2
       product_id: 2, // Product 2
       quantity: 3,
-      total_price: 60,
+      total_price: 60.00,
     },
     // Add more order items data as needed
   ];

@@ -25,7 +25,7 @@ async function dropTables() {
   }
   
 
-async function createTables() {
+async function createTables() { 
     try {
       console.log('Starting to build tables...');
       await client.query(`
@@ -47,12 +47,12 @@ async function createTables() {
           description text,
           price integer,
           stock integer,
-          category_id integer REFERENCES categories(id),
+          category_id integer REFERENCES categories(id) ON DELETE CASCADE,
           image_urls varchar[]
         );
         CREATE TABLE IF NOT EXISTS reviews (
           id serial PRIMARY KEY,
-          product_id integer REFERENCES products(id),
+          product_id integer REFERENCES products(id) ON DELETE CASCADE,
           user_id integer REFERENCES users(id),
           rating integer,
           comment text,
@@ -69,8 +69,8 @@ async function createTables() {
         );
         CREATE TABLE IF NOT EXISTS order_items (
           id serial PRIMARY KEY,
-          order_id integer REFERENCES orders(id),
-          product_id integer REFERENCES products(id),
+          order_id integer REFERENCES orders(id) ON DELETE CASCADE,
+          product_id integer REFERENCES products(id) ON DELETE CASCADE,
           quantity integer NOT NULL,
           total_price decimal(10, 2) NOT NULL
         );
@@ -82,12 +82,12 @@ async function createTables() {
         CREATE TABLE IF NOT EXISTS cart_items (
           id serial PRIMARY KEY,
           cart_id integer REFERENCES carts(id),
-          product_id integer REFERENCES products(id),
+          product_id integer REFERENCES products(id) ON DELETE CASCADE,
           quantity integer NOT NULL
         );
         CREATE TABLE IF NOT EXISTS payment (
           id serial PRIMARY KEY,
-          order_id integer REFERENCES orders(id),
+          order_id integer REFERENCES orders(id) ON DELETE CASCADE,
           payment_method varchar,
           amount integer,
           status varchar,
@@ -97,7 +97,7 @@ async function createTables() {
         CREATE TABLE IF NOT EXISTS sales_analytics (
           id serial PRIMARY KEY,
           date date,
-          product_id integer REFERENCES products(id),
+          product_id integer REFERENCES products(id) ON DELETE CASCADE,
           quantity_sold integer,
           total_revenue integer,
           customer_id integer REFERENCES users(id)
